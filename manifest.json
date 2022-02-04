@@ -1,10 +1,10 @@
 {
-	"id": "obsidian-sample-plugin",
-	"name": "Sample Plugin",
-	"version": "1.0.1",
-	"minAppVersion": "0.12.0",
-	"description": "This is a sample plugin for Obsidian. This plugin demonstrates some of the capabilities of the Obsidian API.",
-	"author": "Obsidian",
-	"authorUrl": "https://obsidian.md",
-	"isDesktopOnly": false
+	"id": "obsidian-relativenumber",
+	"name": "Relativenumber (relative line numbers)",
+	"version": "1.0.0",
+	"minAppVersion": "0.13.0",
+	"description": "Displays relative line numbers in the editor's gutter.",
+	"author": "Rob Stevenson",
+	"authorUrl": "https://github.com/thisdotrob/",
+	"isDesktopOnly": true
 }
