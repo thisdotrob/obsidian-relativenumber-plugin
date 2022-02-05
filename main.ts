@@ -36,37 +36,20 @@ export default class RelativeLineNumbers extends Plugin {
     }
   }
 
-  registerLegacyExtension() {
-    if (this.isShowLineNumberEnabled()) {
-      this.enableLegacyExtension()
-    }
-
-    const configChangedEvent = this.app.vault.on('config-changed', () => {
-      const showLineNumber: Boolean = this.app.vault.getConfig("showLineNumber");
-      if (showLineNumber && !this.legacyEnabled) {
-        this.enableLegacyExtension()
-      } else if (!showLineNumber && this.legacyEnabled) {
-        this.disableLegacyExtension()
-      }
-    });
-
-    configChangedEvent.ctx = this;
-
-    this.registerEvent(configChangedEvent)
-  }
-
-  enableLegacyExtension() {
-    this.legacyEnabled = true;
-    this.registerCodeMirror((cm) => {
-      cm.on("cursorActivity", this.legacyHandler);
-    });
-  }
-
-  disableLegacyExtension() {
-    this.legacyEnabled = false;
+  unload() {
     this.app.workspace.iterateCodeMirrors((cm) => {
       cm.off("cursorActivity", this.legacyHandler);
       cm.setOption("lineNumberFormatter", CodeMirror.defaults["lineNumberFormatter"]);
+      if (!this.isShowLineNumberEnabled()) {
+        cm.setOption("lineNumbers", false)
+      }
+    });
+  }
+
+  registerLegacyExtension() {
+    this.registerCodeMirror((cm) => {
+      cm.setOption("lineNumbers", true)
+      cm.on("cursorActivity", this.legacyHandler);
     });
   }
 
